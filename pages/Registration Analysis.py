@@ -3,62 +3,60 @@ import pandas as pd
 import plotly.express as px
 from modules.preprocessor import preprocess_Reg_Data
 
+#page config
 st.set_page_config(page_title="InsightZ - NPTEL Report Generator",
                    page_icon="📈",
                    layout="wide")
 
 
 st.title("Registration analysis")
-st.subheader("version 1")
+st.caption("Registration analysis for NPTEL registrations. Load data in sidebar. ")
 
-def value_counter(df: pd.DataFrame, column: str, value: str) -> int:
-    return df[column].value_counts().get(value, 0)
-
-def count_department_entries(df: pd.DataFrame, column: str = "Department") -> pd.Series:
-    return df[column].value_counts()
-
-
-    
-
-
-
+#uploader in side bar
 uploaded_files = st.sidebar.file_uploader(
     "Upload the result files", 
     accept_multiple_files=True, 
     type=["xlsx", "xls"]
 )
 
+#counts entries
+def value_counter(df: pd.DataFrame, column: str, value: str) -> int:
+    return df[column].value_counts().get(value, 0)
+
+#department wise entries
+def count_department_entries(df: pd.DataFrame, column: str = "Department") -> pd.Series:
+    return df[column].value_counts()
+
+
+    
+
 if uploaded_files:
-    st.sidebar.success("File Upload Successful!")
+    st.toast("Data Has Been Uploaded Sucessfully")
+
+
+    # Loading Preprocessed data 
     columns_to_drop = ['College Roll Number', 'Unproctored programming exam score out of 25', 'Emailid']
+    combined_df, cleaned_df, faculty_df, student_df,stats = preprocess_Reg_Data(uploaded_files,columns_to_drop)
+    dept_wise_count = stats['dept_wise_count']
+    male_count = stats['male_count']
+    female_count = stats['female_count']
+    faculty_male = stats['faculty_male']
+    faculty_female = stats['faculty_female']
+    student_male = stats['student_male']
+    student_female = stats['student_female']
+    courses = stats['courses']
+    ST_SC = stats['ST_SC']
 
-    # Preprocessed data loaded
-    combined_df, cleaned_df, faculty_df, student_df = preprocess_Reg_Data(uploaded_files,columns_to_drop)
-
-    dept_wise_count=count_department_entries(cleaned_df)
-    st.write(dept_wise_count)
-
-    male_count = value_counter(cleaned_df, 'Gender', 'male')
-    female_count = value_counter(cleaned_df, 'Gender', 'female')
-    st.write(male_count)
-    st.write(female_count)
-
-    faculty_male=cleaned_df[(cleaned_df['Gender'] == 'male') & (cleaned_df['Role'] == 'faculty')].shape[0]
-    faculty_female= cleaned_df[(cleaned_df['Gender']== 'female') & (cleaned_df['Role']=='faculty')].shape[0]
-    
-    
-    student_male= cleaned_df[(cleaned_df['Gender']== 'male') & (cleaned_df['Role']=='student')].shape[0]
-    student_female= cleaned_df[(cleaned_df['Gender']== 'female') & (cleaned_df['Role']=='student')].shape[0]
-    
-    courses= pd.DataFrame(cleaned_df['Course Name'].unique())
-    st.write(courses)
-
-
-    ST_SC = cleaned_df[cleaned_df['SC/ST status'].astype(str).str.upper() == 'TRUE'].shape[0]
-
-
+    # Display results
     st.write(ST_SC)
     st.write(faculty_male)
     st.write(faculty_female)
     st.write(student_male)
     st.write(student_female)
+    st.write(dept_wise_count)
+    st.write(male_count)
+    st.write(female_count)
+    st.write(courses)
+
+else:
+    st.write("Please upload the files in the sidebar")
