@@ -60,9 +60,10 @@ uploaded_files = st.sidebar.file_uploader(
 
 if uploaded_files:
     st.sidebar.success("File Upload Successful!")
+    columns_to_drop = ['College Roll no', 'Unproctored programming exam score out of 25', 'DOB', 'Email Id']
 
     # Preprocessed data loaded
-    combined_df, cleaned_df, main_df, absent_df, faculty_df, student_df = preprocess_data(uploaded_files)
+    combined_df, cleaned_df, main_df, absent_df, faculty_df, student_df = preprocess_data(uploaded_files,columns_to_drop)
 
     # Sidebar for department selection
     if 'Department' in main_df.columns:
