@@ -1,14 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-from modules.preprocessor import preprocess_data, preprocess_Reg_Data
+from modules.preprocessor import preprocess_Reg_Data
 
 st.set_page_config(page_title="InsightZ - NPTEL Report Generator",
                    page_icon="📈",
                    layout="wide")
 
 
-st.title("Registration analysis playground")
+st.title("Registration analysis")
 st.subheader("version 1")
 
 def value_counter(df: pd.DataFrame, column: str, value: str) -> int:
@@ -16,6 +16,9 @@ def value_counter(df: pd.DataFrame, column: str, value: str) -> int:
 
 def count_department_entries(df: pd.DataFrame, column: str = "Department") -> pd.Series:
     return df[column].value_counts()
+
+
+    
 
 
 
@@ -47,7 +50,14 @@ if uploaded_files:
     student_male= cleaned_df[(cleaned_df['Gender']== 'male') & (cleaned_df['Role']=='student')].shape[0]
     student_female= cleaned_df[(cleaned_df['Gender']== 'female') & (cleaned_df['Role']=='student')].shape[0]
     
+    courses= pd.DataFrame(cleaned_df['Course Name'].unique())
+    st.write(courses)
 
+
+    ST_SC = cleaned_df[cleaned_df['SC/ST status'].astype(str).str.upper() == 'TRUE'].shape[0]
+
+
+    st.write(ST_SC)
     st.write(faculty_male)
     st.write(faculty_female)
     st.write(student_male)
