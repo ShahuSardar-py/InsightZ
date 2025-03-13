@@ -11,10 +11,10 @@ st.set_page_config(page_title="InsightZ - NPTEL Report Generator",
 
 st.title("Registration analysis")
 st.caption("Registration analysis for NPTEL registrations. Load data in sidebar. ")
-
+st.divider()
 #uploader in side bar
 uploaded_files = st.sidebar.file_uploader(
-    "Upload the result files", 
+    "Upload the CSV files", 
     accept_multiple_files=True, 
     type=["xlsx", "xls"]
 )
@@ -47,7 +47,19 @@ if uploaded_files:
     courses = stats['courses']
     ST_SC = stats['ST_SC']
 
+
+    total_registered = cleaned_df.shape[0]
+    registred=int(total_registered)
     # Display results
+
+    col1 = st.columns(1)
+    col1.metric("Total Registered",value=registred)
+    a, b = st.columns(2)
+    c, d = st.columns(2)
+
+
+
+    st.write(total_registered)
     st.write(ST_SC)
     st.write(faculty_male)
     st.write(faculty_female)
