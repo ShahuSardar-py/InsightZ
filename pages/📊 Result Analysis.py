@@ -50,8 +50,9 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("InsightZ - Result Ananlysis")
-st.write("V 2.0.0")
+st.title("InsightZ - :orange[Result Ananlysis]")
+st.caption("Result analysis for NPTEL registrations. Load data in sidebar.")
+st.write("V 3.0.0")
 
 # SIDEBAR
 uploaded_files = st.sidebar.file_uploader(

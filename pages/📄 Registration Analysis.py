@@ -33,7 +33,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("Registration analysis")
+st.title("InsightZ - :orange[Registration Analysis]")
 st.caption("Registration analysis for NPTEL registrations. Load data in sidebar.")
 st.divider()
 

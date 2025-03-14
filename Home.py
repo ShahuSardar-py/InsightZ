@@ -4,7 +4,8 @@ st.set_page_config(
     page_icon="📈",
 )
 
-st.title("InsightZ | Automated NPTEL Report Generator")
+st.title("InsightZ ")
+st.header(":blue[_Automated NPTEL Report Generator_]")
 st.divider()
 
 st.sidebar.success("Select app")
@@ -49,7 +50,7 @@ text-align: center;
 }
 </style>
 <div class="footer">
-<p>Developed By  Shahu Sardar For Dept. OF Data Science GHRCEM</p>
+<p>Developed By Shahu Sardar For Dept. OF Data Science GHRCEM</p>
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)

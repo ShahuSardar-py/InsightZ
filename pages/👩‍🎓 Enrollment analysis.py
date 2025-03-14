@@ -22,6 +22,8 @@ for file in uploaded_files:
 
         
 st.markdown("We are still tweaking things a  bit. Come back later :)")
+
+
 if uploaded_files:
     st.sidebar.success("Files uploaded")
 
@@ -40,9 +42,8 @@ if uploaded_files:
             """, unsafe_allow_html=True)
     st.markdown(f"""
             <div class="kpi-box">
-                <h2>Total SC/ST</h2>
-                <h1>{males }</h1>
+                <h2>Total Males</h2>
+                <h1>{males}</h1>
             </div>
             """, unsafe_allow_html=True)
-            
     
