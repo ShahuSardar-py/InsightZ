@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from modules.preprocessor import preprocess_result_data
+import time
+
 
 # Functions
 
@@ -48,7 +50,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("InsightZ - NPTEL Report Generator")
+st.title("InsightZ - Result Ananlysis")
 st.write("V 2.0.0")
 
 # SIDEBAR
@@ -59,12 +61,14 @@ uploaded_files = st.sidebar.file_uploader(
 )
 
 if uploaded_files:
+
     st.sidebar.success("File Upload Successful!")
     columns_to_drop = ['College Roll no', 'Unproctored programming exam score out of 25', 'DOB', 'Email Id']
 
     # Preprocessed data loaded
     combined_df, cleaned_df, main_df, absent_df, faculty_df, student_df = preprocess_result_data(uploaded_files,columns_to_drop)
-
+    with st.spinner("Hang on Tight! Generating report in", show_time=True):
+        time.sleep(3)
     # Sidebar for department selection
     if 'Department' in main_df.columns:
         departments = ["All Departments"] + list(main_df['Department'].unique())
@@ -173,4 +177,3 @@ if uploaded_files:
 
 else:
     st.write("Please upload the files in the side bar")
-    

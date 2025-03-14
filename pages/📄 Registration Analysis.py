@@ -2,12 +2,11 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 from modules.preprocessor import preprocess_Reg_Data
-
+import time
 #page config
 st.set_page_config(page_title="InsightZ - NPTEL Report Generator",
                    page_icon="📈",
                    layout="wide")
-
 
 st.markdown(
     """
@@ -35,8 +34,9 @@ st.markdown(
 )
 
 st.title("Registration analysis")
-st.caption("Registration analysis for NPTEL registrations. Load data in sidebar. ")
+st.caption("Registration analysis for NPTEL registrations. Load data in sidebar.")
 st.divider()
+
 #uploader in side bar
 uploaded_files = st.sidebar.file_uploader(
     "Upload the CSV files", 
@@ -52,16 +52,13 @@ def value_counter(df: pd.DataFrame, column: str, value: str) -> int:
 def count_department_entries(df: pd.DataFrame, column: str = "Department") -> pd.Series:
     return df[column].value_counts()
 
-
-    
+if uploaded_files:
+    st.toast("Data Has Been Uploaded Successfully")
 
 if uploaded_files:
-    st.toast("Data Has Been Uploaded Sucessfully")
-
-
     # Loading Preprocessed data 
     columns_to_drop = ['College Roll Number', 'Unproctored programming exam score out of 25', 'Emailid']
-    combined_df, cleaned_df, faculty_df, student_df,stats = preprocess_Reg_Data(uploaded_files,columns_to_drop)
+    combined_df, cleaned_df, faculty_df, student_df, stats = preprocess_Reg_Data(uploaded_files, columns_to_drop)
     dept_wise_count = stats['dept_wise_count']
     male_count = stats['male_count']
     female_count = stats['female_count']
@@ -71,8 +68,10 @@ if uploaded_files:
     student_female = stats['student_female']
     courses = stats['courses']
     ST_SC = stats['ST_SC']
-    
 
+
+    with st.spinner("Hang on Tight! Generating report in", show_time=True):
+        time.sleep(3)
     total_registered = cleaned_df.shape[0]
     # Display results
 
@@ -84,16 +83,15 @@ if uploaded_files:
             </div>
             """, unsafe_allow_html=True)
 
-    
     a, b = st.columns(2)
     c, d, e, f = st.columns(4)
 
     a.metric("Male Count", male_count, border=True)
     b.metric("Female Count", female_count, border=True)
 
-    c.metric("Male Student", student_male,border=True)
-    d.metric("Female Student", student_female, border= True)
-    e.metric("Male Faculty", faculty_male, border= True)
+    c.metric("Male Student", student_male, border=True)
+    d.metric("Female Student", student_female, border=True)
+    e.metric("Male Faculty", faculty_male, border=True)
     f.metric("Female Faculty", faculty_female, border=True)
     st.subheader(f'''
     :red[SC/ST]:
@@ -104,43 +102,26 @@ if uploaded_files:
     st.divider()
     st.header(":blue[Department wise Count]")
 
-    col1,col2=st.columns(2)
+    col1, col2 = st.columns(2)
     with col1:
         st.table(data=dept_wise_count)
     with col2:
         st.caption("You Can Expand the Chart")
-        dep_count_histogram = px.bar(cleaned_df, x= "Department", color="Department")
+        dep_count_histogram = px.bar(cleaned_df, x="Department", color="Department")
         st.plotly_chart(dep_count_histogram, use_container_width=True)
-
 
     st.divider()
     st.header("Courses Offered")
     with st.expander("Expand Course List"):
         st.table(courses)
 
-
     with st.expander('About', expanded=True):
-                st.caption('''
-                    InsightZ- NPTEL report generator. 
+        st.caption('''InsightZ- NPTEL report generator. 
                     V 1.2.6
                     A robust data analyser and report generator for NPTEL data
                     ♥
                         
         ''')
-
-    
-
-
-    #st.write(f'DONE!{total_registered}')
-    #st.write(ST_SC)
-    #st.write(faculty_male)
-    #st.write(faculty_female)
-    #st.write(student_male)
-    #st.write(student_female)
-    #st.write(dept_wise_count)
-    #st.write(male_count)
-    #st.write(female_count)
-    #st.write(courses)
 
 else:
     st.write("Please upload the files in the sidebar")
