@@ -71,7 +71,7 @@ if uploaded_files:
 
 
     with st.spinner("Hang on Tight! Generating report in"):
-        time.sleep(3)
+        time.sleep(5)
     total_registered = cleaned_df.shape[0]
     # Display results
 
