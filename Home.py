@@ -51,7 +51,7 @@ text-align: center;
 }
 </style>
 <div class="footer">
-<p>Developed By  Yogesh Mokasare</p>
+<p>Developed By  Shahu Sardar For Dept. OF Data Science GHRCEM</p>
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)

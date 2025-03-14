@@ -58,6 +58,7 @@ def compute_statistics(df):
 
     # Count SC/ST students
     ST_SC = df[df['SC/ST status'].astype(str).str.upper() == 'TRUE'].shape[0]
+    
 
     return {
         'dept_wise_count': dept_wise_count,
@@ -68,7 +69,8 @@ def compute_statistics(df):
         'student_male': student_male,
         'student_female': student_female,
         'courses': courses,
-        'ST_SC': ST_SC
+        'ST_SC': ST_SC,
+        
     }
 
     
@@ -86,6 +88,7 @@ def compute_statistics(df):
 def preprocess_result_data(uploaded_files, columns_to_drop, attendance_col='Present/Absent', role_col='Role'):
     combined_df = combiner(uploaded_files)
     cleaned_df = drop_columns(combined_df, columns_to_drop)
+
     main_df = filter_rows(cleaned_df, attendance_col, 'Present')
     absent_df = filter_rows(cleaned_df, attendance_col, 'Absent')
     faculty_df, student_df = segregate_data(main_df, role_col)
