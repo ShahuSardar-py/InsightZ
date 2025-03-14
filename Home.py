@@ -13,10 +13,8 @@ st.header('How to use this app:')
 
 st.markdown(
     """
-    How to Use This App
-
     :green[Upload Your Files]\n
-    Head to the sidebar and upload your NPTEL result files in .xlsx or .xls format.
+    Select app & head to the sidebar and upload your NPTEL files in .xlsx or .xls format.
 
     :green[View the Main Data]\n
     After the files are successfully uploaded, expand the "Main Data" section to see your cleaned and combined data.
