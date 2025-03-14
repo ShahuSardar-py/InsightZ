@@ -70,7 +70,7 @@ if uploaded_files:
     ST_SC = stats['ST_SC']
 
 
-    with st.spinner("Hang on Tight! Generating report in", show_time=True):
+    with st.spinner("Hang on Tight! Generating report in"):
         time.sleep(3)
     total_registered = cleaned_df.shape[0]
     # Display results

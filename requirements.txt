@@ -201,7 +201,7 @@ SQLAlchemy==2.0.29
 sqlparse==0.4.4
 stack-data==0.6.3
 starlette==0.37.2
-streamlit==1.37.1
+streamlit==1.32.0
 streamlit-authenticator==0.3.3
 sympy==1.12
 tenacity==8.2.3

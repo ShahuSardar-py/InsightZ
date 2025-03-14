@@ -68,7 +68,7 @@ if uploaded_files:
 
     # Preprocessed data loaded
     combined_df, cleaned_df, main_df, absent_df, faculty_df, student_df = preprocess_result_data(uploaded_files,columns_to_drop)
-    with st.spinner("Hang on Tight! Generating report in", show_time=True):
+    with st.spinner("Hang on Tight! Generating report in"):
         time.sleep(3)
     # Sidebar for department selection
     if 'Department' in main_df.columns:
